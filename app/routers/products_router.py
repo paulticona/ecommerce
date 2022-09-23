@@ -2,55 +2,56 @@ from app import api
 from flask_restx import Resource
 from flask import request
 from flask_jwt_extended import jwt_required
-from app.schemas.categories_schema import CategoriesRequestSchema
-from app.controllers.categories_controller import CategoriesController
+from app.schemas.products_schema import ProductsRequestSchema
+from app.controllers.products_controller import ProductsController
 
-namespace = api.namespace(
-    name='Categories',
-    description='Endpoints para las Categorias',
-    path='/Categories'
+namespace = api.namespace( 
+    name='Products',
+    description='Endpoints para las Productos',
+    path='/products'
 )
 
-request_schema = CategoriesRequestSchema(namespace)
+request_schema = ProductsRequestSchema(namespace)
 
 
 @namespace.route('')
 @namespace.doc(security='Bearer')
-class Categories(Resource):
+class Products(Resource):
     @jwt_required()
     def get(self):
-        '''Listar todas las Categoría'''
-        controller = CategoriesController()
+        '''Listar todos los Productos'''
+        controller = ProductsController()
         return controller.all()
 
     @jwt_required()
     @namespace.expect(request_schema.create(), validate=True)
     def post(self):
-        '''Crear una Categoría'''
-        controller = CategoriesController()
+        '''Crear un Producto'''
+        controller = ProductsController()
         return controller.create(request.json)
 
 
 @namespace.route('/<int:id>')
 @namespace.doc(security='Bearer')
-class CategoriesById(Resource):
+class ProductsById(Resource):
     @jwt_required()
+
     def get(self, id):
-        '''Obtener una Categoría por el ID'''
-        controller = CategoriesController()
+        '''Obtener un Producto por el ID'''
+        controller = ProductsController()
         return controller.getById(id)
 
     @jwt_required()
     @namespace.expect(request_schema.update(), validate=True)
     def put(self, id):
-        '''Actualizar una Categoría por el ID'''
-        controller = CategoriesController()
+        '''Actualizar un Producto por el ID'''
+        controller = ProductsController()
         return controller.update(id, request.json)
 
     @jwt_required()
     def delete(self, id):
-        '''Desabilitar una Categoría por el ID'''
-        controller = CategoriesController()
+        '''Desabilitar un Producto por el ID'''
+        controller = ProductsController()
         return controller.delete(id)
 
 
