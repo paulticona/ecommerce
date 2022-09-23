@@ -9,6 +9,7 @@ from config import config_env
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask_cors import CORS
+from flask_seeder import FlaskSeeder
 
 # ? INSTANCIAS
 # *instancia de flask Flask
@@ -47,3 +48,7 @@ jwt = JWTManager(app)
 mail = Mail(app)
 
 CORS(app)
+
+# * Instancia de Semillas
+# * Flask-Seeder es una extensión de Flask para ayudar a sembrar la base de datos con datos iniciales
+seeder = FlaskSeeder(app, db)

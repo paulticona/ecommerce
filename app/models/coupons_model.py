@@ -12,4 +12,4 @@ class CouponModel(BaseModel):
     started_ad = Column(DateTime)
     ended_ad = Column(DateTime)
     status = Column(Boolean, default=True)
- 
+    
