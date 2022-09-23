@@ -3,7 +3,7 @@ from sqlalchemy import Column, Time, Integer, Boolean, ForeignKey, Date, String
 from sqlalchemy.orm import relationship
 
 
-class HolidayHourModel(BaseModel):
+class HolidayModel(BaseModel):
     __tablename__ = 'holidays'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
