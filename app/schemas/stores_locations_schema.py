@@ -13,7 +13,7 @@ class StoresLocationsRequestSchema:
         })
 
     def update(self):
-        return self.namespace.model('Store Locations Create', {
+        return self.namespace.model('Store Locations Update', {
             'name': fields.String(required=True, min_length=2, max_length=120)
         })
 
