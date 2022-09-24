@@ -1,22 +1,27 @@
 
 from app import db
 from app.models.holidays_model import HolidayModel
-from app.schemas.holidays_schema import HolidaysResponseSchema
+from app.schemas.holidays_schema import HolidaysResponseSchema, HolidaysDeliveryResponseSchema
 from datetime import datetime, timedelta
+from pytz import timezone
+from locale import setlocale, LC_ALL
 
 
 class HolidaysController:
     def __init__(self):
         self.model = HolidayModel
         self.schema = HolidaysResponseSchema
+        self.schema_delivery = HolidaysDeliveryResponseSchema
 
         self.__max_count = 5
         self.__start_hour = '00:00:00'
         self.__end_hour = '21:00:00'
         self.__not_working = [6]  # 0-lUnes... 6-domingo
 
-        self.datetimenow = datetime.now()
+        self.timezone = timezone('America/Lima')
+        self.datetimenow = datetime.now(tz=self.timezone)
         self.hournow = self.datetimenow.strftime('%H:%M:%S')
+        setlocale(LC_ALL, 'es_ES')
 
     def all(self):
         try:
@@ -52,22 +57,37 @@ class HolidaysController:
 
     def deliveryDates(self):
         try:
+            records = self.model.where(status=True).order_by('date').all()
+            holidays = [
+                datetime.strftime(holiday.date, '%d-%#m')
+                for holiday in records
+            ]
+
             date_now = self.datetimenow.date()
 
             if self.hournow > self.__end_hour or self.hournow < self.__start_hour:
                 date_now += timedelta(days=1)
 
             delivery_dates = []
-            count = 0    
+            count = 0
             while count < self.__max_count:
                 date_now += timedelta(days=1)
+
                 if date_now.weekday() not in self.__not_working:
-                    delivery_dates.append(date_now)
-                    count += 1
+                    if f'{date_now.day}-{date_now.month}' not in holidays:
+                        delivery_dates.append(
+                            {
+                                'date': date_now,
+                                'format': datetime.strftime(
+                                    date_now, '%A, %d de %B'
+                                )
+                            }
+                        )
+                        count += 1
 
-            print(delivery_dates)
+            response = self.schema_delivery(many=True)
             return {
-
+                'data': response.dump(delivery_dates)
             }, 200
         except Exception as e:
             return {

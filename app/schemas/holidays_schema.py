@@ -1,6 +1,7 @@
 from flask_restx import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from app.models.holidays_model import HolidayModel
+from marshmallow import Schema, fields as fields_ms
 
 
 class HolidaysRequestSchema:
@@ -25,3 +26,11 @@ class HolidaysResponseSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = HolidayModel
         ordered = True
+
+
+class HolidaysDeliveryResponseSchema(Schema):
+    class Meta:
+        ordered = True
+    date = fields_ms.Date(format='%Y-%m-%d')
+    format = fields_ms.String()
+
