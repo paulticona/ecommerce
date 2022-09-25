@@ -1,7 +1,5 @@
 from app.models.base import BaseModel
 from sqlalchemy import Column, Integer, Boolean, String, Float, DateTime
-from sqlalchemy.orm import relationship
-
 
 class CouponModel(BaseModel):
     __tablename__ = 'coupons'
