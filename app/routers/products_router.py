@@ -27,8 +27,9 @@ class Products(Resource):
     @namespace.expect(request_schema.create(), validate=True)
     def post(self):
         '''Crear un Producto'''
+        form = request_schema.create().parse_args()
         controller = ProductsController()
-        return controller.create(request.json)
+        return controller.create(form)
 
 
 @namespace.route('/<int:id>')

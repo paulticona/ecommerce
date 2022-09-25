@@ -8,6 +8,8 @@ class ProductsController:
         self.model = ProductModel
         self.schema = ProductsResponseSchema
 
+        self.__allowed_extensions = ['jpg', 'png', 'jpeg', 'webp']
+
     def all(self):
         try:
             records = self.model.where(status=True).order_by('id').all()
@@ -42,17 +44,19 @@ class ProductsController:
 
     def create(self, data):
         try:
-
+            filename, stream = self.__validateExtencionImage(data['image'])
+            print(filename, stream)
+            # print(data['image'].__dict__)
             # key=valuye key=value1 ...key=valuen
-            new_record = self.model.create(**data)
+            #new_record = self.model.create(**data)
             # * agregamos la data a la DB mediente la conneccion
-            db.session.add(new_record)
-            db.session.commit()
+            # db.session.add(new_record)
+            # db.session.commit()
 
-            response = self.schema(many=False)
+            #response = self.schema(many=False)
             return {
                 'message': 'El Producto se creo con exito',
-                'data': response.dump(new_record)
+                # 'data': response.dump(new_record)
             }, 201
         except Exception as e:
             db.session.rollback()
@@ -104,3 +108,13 @@ class ProductsController:
                 'message': 'Orcurrio un error',
                 'error': str(e)
             }, 500
+
+    def __validateExtencionImage(self, image):
+        filename = image.filename
+        stream = image.stream
+        # nombre_achivo.extencion el indice 1
+        extencion = filename.split('.')[1]
+        if extencion not in self.__allowed_extensions:
+            raise Exception('El tipo de archivo usado no esta permitido')
+
+        return filename, stream
