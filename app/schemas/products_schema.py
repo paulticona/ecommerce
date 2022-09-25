@@ -20,10 +20,13 @@ class ProductsRequestSchema:
     
         return parser
     def update(self):
-        return self.namespace.model('Product Update', {
-            'name': fields.String(required=False, min_length=2, max_length=120),
-
-        })
+        parser = RequestParser()
+        parser.add_argument('name', type=str, required=False, location='form')
+        parser.add_argument('description', type=str, required=False, location='form')
+        parser.add_argument('price', type=float, required=False, location='form')
+        parser.add_argument('image', type=FileStorage, required=True, location='files')
+        parser.add_argument('stock', type=int, required=False, location='form')
+        parser.add_argument('category_id', type=int, required=False, location='form')
 
 
 class ProductsResponseSchema(SQLAlchemyAutoSchema):

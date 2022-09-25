@@ -1,0 +1,2 @@
+AccessClaveID = AKIA6ILLKEVR73OWPR5G
+AccessClaveSECRET = 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
