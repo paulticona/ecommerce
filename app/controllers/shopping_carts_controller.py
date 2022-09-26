@@ -9,17 +9,37 @@ class ShoppingCartsController:
         self.model = ShoppingCartModel
         self.schema = ShoppingCartsResponseSchema
         self.user_id = current_user['id']
+        self.igv = 0.18
+        # variable para mostrar al front
+        self.prices = {
+            'total': 0,
+            'subtotal': 0,
+            'igv': 0,
+        }
 
     def all(self):
         # ! 1:20 del video 25
 
         try:
-            records = self.model.where(
-                user_id=self.user_id).order_by('id').all()
+            records = self.model.where(user_id=self.user_id).all()
             response = self.schema(many=True)
+            data = response.dump(records)
+            # logica para calcular el subtotal del carrito
+            if records:
+                for item in data:
+                    price = item['product']['price']
+                    quantity = item['quantity']
+                    self.prices['subtotal'] += price * quantity
+                # logica par calcular el IGV
+                self.prices['igv'] = round(self.prices['subtotal'] * self.igv, 2)
+                # hallamos el total
+                self.prices['total'] = round(self.prices['subtotal'] + self.prices['igv'], 2)
+
             return {
-                'data': response.dump(records)
-            }
+                'data': data,
+                'prices': self.prices
+            }, 200
+
         except Exception as e:
             return {
                 'message': 'Orcurrio un error',
