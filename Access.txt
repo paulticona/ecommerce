@@ -1,0 +1,27 @@
+AccessClaveID = AKIA6ILLKEVR73OWPR5G
+AccessClaveSECRET = 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
+
+Public key = TEST-35a09a12-0ed1-41bf-91a3-c1a32ceb4a79
+Acces Token = TEST-7323017564949479-092617-f29c53f19b5045a71d7562975823bf5d-663870858
+
+Cuenta de vendedor = {
+    "id": 1205926920,
+    "nickname": "TESTGUHHVQFC",
+    "password": "fsayaQdw1r",
+    "site_status": "active",
+    "site_id": "MPE",
+    "description": "user ventas",
+    "date_created": "2022-09-26T19:43:14-04:00",
+    "date_last_updated": "2022-09-26T19:43:14-04:00"
+}
+
+Cuenta de conprador = {
+    "id": 1205929040,
+    "nickname": "TESTFEDP4BMW",
+    "password": "FbemkvedYu",
+    "site_status": "active",
+    "site_id": "MPE",
+    "description": "user comprador",
+    "date_created": "2022-09-26T19:45:38-04:00",
+    "date_last_updated": "2022-09-26T19:45:38-04:00"
+}
