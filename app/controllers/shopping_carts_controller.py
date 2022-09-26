@@ -70,19 +70,20 @@ class ShoppingCartsController:
                 'error': str(e)
             }, 500
 
-    def delete(self, id):
+    def delete(self, product_id):
         try:
-            if record := self.model.where(id=id).first():
-                pass
-
-                # if record.status:
-                #    record.update()
-                #    db.session.add(record)
-                #    db.session.commit()
-                # return {
-                #    'message': 'Se desabilito la Categoría con exito'
-               # }
-
+            if record := self.model.where(
+                user_id = self.user_id,
+                product_id = product_id
+            ).first():
+                record.delete()
+                db.session.commit()
+                return {
+                   'message': 'Se eliminó el Produccto con exito'
+               }
+            return {
+                'message': 'No se encontro el producto en mencion'
+            },404
         except Exception as e:
             db.session.rollback()
             return {
