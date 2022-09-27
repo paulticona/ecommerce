@@ -1,0 +1,108 @@
+{
+    "additional_info": "", /**/
+    "auto_return": "",
+    "back_urls": {
+      "failure": "",  /*redireccion para errores*/
+      "pending": "",  /*redireccion para pagos pendientes como pago en agentes*/
+      "success": ""     /*redireccion para pagos confimados*/
+    },
+    "binary_mode": false,
+    "client_id": "4011305799961924",  /* Necesario para un pedido*/
+    "collector_id": 1205926920,   /* Necesario gurdar. ayuda a tener el ESTADO del pago*/
+    "coupon_code": null,
+    "coupon_labels": null,
+    "date_created": "2022-09-27T08:55:26.962-04:00",
+    "date_of_expiration": null,
+    "expiration_date_from": null,
+    "expiration_date_to": null,
+    "expires": false,
+    "external_reference": "",  /*Augenera el pedido*/
+    "id": "1205926920-4fdb2b65-f08d-4077-b6a2-9370dd36a537",
+    "init_point": "https://www.mercadopago.com.pe/checkout/v1/redirect?pref_id=1205926920-4fdb2b65-f08d-4077-b6a2-9370dd36a537", /* URl pra realizar el pago*/
+    "internal_metadata": null,
+    "items": [
+      {
+        "id": "1",
+        "category_id": "",
+        "currency_id": "PEN",
+        "description": "",
+        "title": "Producto 1",
+        "quantity": 2,
+        "unit_price": 150.2
+      },
+      {
+        "id": "2",
+        "category_id": "",
+        "currency_id": "PEN",
+        "description": "",
+        "title": "Producto 2",
+        "quantity": 1,
+        "unit_price": 70.5
+      }
+    ],
+    "marketplace": "NONE",
+    "marketplace_fee": 0,
+    "metadata": {},
+    "notification_url": null,
+    "operation_type": "regular_payment",
+    "payer": {
+      "phone": {
+        "area_code": "",
+        "number": ""
+      },
+      "address": {
+        "zip_code": "",
+        "street_name": "",
+        "street_number": null
+      },
+      "email": "roberto.quiroga@gmail.com",
+      "identification": {
+        "number": "",
+        "type": ""
+      },
+      "name": "Roberto",
+      "surname": "Quiroga",
+      "date_created": null,
+      "last_purchase": null
+    },
+    "payment_methods": {
+      "default_card_id": null,
+      "default_payment_method_id": null,
+      "excluded_payment_methods": [
+        {
+          "id": ""
+        }
+      ],
+      "excluded_payment_types": [
+        {
+          "id": ""
+        }
+      ],
+      "installments": null,
+      "default_installments": null
+    },
+    "processing_modes": null,
+    "product_id": null,
+    "redirect_urls": {
+      "failure": "",
+      "pending": "",
+      "success": ""
+    },
+    "sandbox_init_point": "https://sandbox.mercadopago.com.pe/checkout/v1/redirect?pref_id=1205926920-4fdb2b65-f08d-4077-b6a2-9370dd36a537",
+    "site_id": "MPE",
+    "shipments": {
+      "default_shipping_method": null,
+      "receiver_address": {
+        "zip_code": "",
+        "street_name": "",
+        "street_number": null,
+        "floor": "",
+        "apartment": "",
+        "city_name": null,
+        "state_name": null,
+        "country_name": null
+      }
+    },
+    "total_amount": null,
+    "last_updated": null
+  }
