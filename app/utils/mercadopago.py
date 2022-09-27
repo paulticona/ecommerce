@@ -37,30 +37,32 @@ class Mercadopago:
         response = get(url, headers=self.main_headers)
         return response.json() or {}
 
-    def createPreferences(self):
+    def createPreferences(self, payer, products, order_correlative):
         url = f'{self.base_url}/checkout/preferences'
+
+        # {
+        #     'name': 'Roberto',
+        #     'surname': 'Quiroga',
+        #     'email': 'roberto.quiroga@gmail.com'
+        # }
+
+        # {
+        #     'id': 1,
+        #     'title': 'Producto 1',
+        #     'quantity': 2,
+        #     'unit_price': 150.20,
+        #     'currency_id': 'PEN'
+        # }
+
         body = {
-            'payer': {
-                'name': 'Roberto',
-                'surname': 'Quiroga',
-                'email': 'roberto.quiroga@gmail.com'
+            'back_urls':{
+                'success': '',
+                'pending': '',
+                'failure': ''
             },
-            'items': [
-                {
-                    'id': 1,
-                    'title': 'Producto 1',
-                    'quantity': 2,
-                    'unit_price': 150.20,
-                    'currency_id': 'PEN'
-                },
-                {
-                    'id': 2,
-                    'title': 'Producto 2',
-                    'quantity': 1,
-                    'unit_price': 70.50,
-                    'currency_id': 'PEN'
-                }
-            ]
+            'external_references': order_correlative,
+            'payer': payer,
+            'items': products 
         }
         response = post(url, json=body, headers=self.child_header)
         return response.json() or {}

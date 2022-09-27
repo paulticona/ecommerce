@@ -21,24 +21,7 @@ class ShoppingCartsController:
         # ! 1:20 del video 25
 
         try:
-            records = self.model.where(user_id=self.user_id).all()
-            response = self.schema(many=True)
-            data = response.dump(records)
-            # logica para calcular el subtotal del carrito
-            if records:
-                for item in data:
-                    price = item['product']['price']
-                    quantity = item['quantity']
-                    self.prices['subtotal'] += price * quantity
-                # logica par calcular el IGV
-                self.prices['igv'] = round(self.prices['subtotal'] * self.igv, 2)
-                # hallamos el total
-                self.prices['total'] = round(self.prices['subtotal'] + self.prices['igv'], 2)
-
-            return {
-                'data': data,
-                'prices': self.prices
-            }, 200
+            return self._getAllItems(), 200
 
         except Exception as e:
             return {
@@ -73,20 +56,41 @@ class ShoppingCartsController:
     def delete(self, product_id):
         try:
             if record := self.model.where(
-                user_id = self.user_id,
-                product_id = product_id
+                user_id=self.user_id,
+                product_id=product_id
             ).first():
                 record.delete()
                 db.session.commit()
                 return {
-                   'message': 'Se eliminó el Produccto con exito'
-               }
+                    'message': 'Se eliminó el Produccto con exito'
+                }
             return {
                 'message': 'No se encontro el producto en mencion'
-            },404
+            }, 404
         except Exception as e:
             db.session.rollback()
             return {
                 'message': 'Orcurrio un error',
                 'error': str(e)
             }, 500
+
+    def _getAllItems(self):
+        records = self.model.where(user_id=self.user_id).all()
+        response = self.schema(many=True)
+        data = response.dump(records)
+        # logica para calcular el subtotal del carrito
+        if records:
+            for item in data:
+                price = item['product']['price']
+                quantity = item['quantity']
+                self.prices['subtotal'] += price * quantity
+            # logica par calcular el IGV
+            self.prices['igv'] = round(self.prices['subtotal'] * self.igv, 2)
+            # hallamos el total
+            self.prices['total'] = round(
+                self.prices['subtotal'] + self.prices['igv'], 2)
+
+        return {
+            'data': data,
+            'prices': self.prices
+        }
