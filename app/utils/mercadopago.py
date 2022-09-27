@@ -1,5 +1,5 @@
 from os import getenv
-from requests import post
+from requests import post, get
 
 
 class Mercadopago:
@@ -31,3 +31,37 @@ class Mercadopago:
             headers=self.main_headers
         )
         return response.json() or {}
+
+    def allMethodsPaying(self):
+        url = f'{self.base_url}/v1/payment_methods'
+        response = get(url, headers=self.main_headers)
+        return response.json() or {}
+
+    def createPreferences(self):
+        url = f'{self.base_url}/checkout/preferences'
+        body = {
+            'payer': {
+                'name': 'Roberto',
+                'surname': 'Quiroga',
+                'email': 'roberto.quiroga@gmail.com'
+            },
+            'items': [
+                {
+                    'id': 1,
+                    'title': 'Producto 1',
+                    'quantity': 2,
+                    'unit_price': 150.20,
+                    'currency_id': 'PEN'
+                },
+                {
+                    'id': 2,
+                    'title': 'Producto 2',
+                    'quantity': 1,
+                    'unit_price': 70.50,
+                    'currency_id': 'PEN'
+                }
+            ]
+        }
+        response = post(url, json=body, headers=self.child_header)
+        return response.json() or {}
+
