@@ -43,6 +43,7 @@ pytz==2022.2.1
 requests==2.28.1
 restx-monkey==0.2.1
 s3transfer==0.6.0
+shortuuid==1.0.9
 six==1.16.0
 SQLAlchemy==1.4.40
 sqlalchemy-mixins==1.5.3

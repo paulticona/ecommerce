@@ -94,3 +94,12 @@ class ShoppingCartsController:
             'data': data,
             'prices': self.prices
         }
+
+    def _deleteAllItems(self):
+        records = self.model.where(user_id=self.user_id).all()
+        for record in records:
+            record.delete()
+
+        db.session.commit()
+
+        

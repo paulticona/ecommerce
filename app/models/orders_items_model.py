@@ -13,3 +13,4 @@ class OrderItemModel(BaseModel):
     quantity = Column(Integer)
 
     order = relationship('OrderModel', uselist=True, back_populates='items')
+    #product = relationship('', uselist=False, back_populates='order_items')
